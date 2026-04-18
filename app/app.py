@@ -10,6 +10,7 @@ from .calculadora import sumar, restar, multiplicar, dividir
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-insecure-key")
 
+
 @app.route("/", methods=["GET"])
 def index_get():
     """
