@@ -3,10 +3,16 @@
 DOCSTRING
 """
 
+import os
 from flask import Flask, render_template, request
 from .calculadora import sumar, restar, multiplicar, dividir
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-only-insecure-key")
+
+@app.route("/health")
+def health():
+    return "OK", 200
 
 
 @app.route("/", methods=["GET"])
@@ -48,4 +54,5 @@ def index_post():
 
 if __name__ == "__main__":  # pragma: no cover
     # Quita debug=True para producción
-    app.run(debug=False, port=5000, host="127.0.0.1")
+    app_port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, port=app_port, host="[IP_ADDRESS]")
